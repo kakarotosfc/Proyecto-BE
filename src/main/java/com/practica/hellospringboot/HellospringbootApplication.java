@@ -19,4 +19,9 @@ public class HellospringbootApplication {
 		return String.format("Hello %s!", name);
 	}
 
+	@GetMapping("/bye")
+	public String bye(@RequestParam(value = "name", defaultValue = "My friend") String name) {
+		return String.format("Good bye %s!", name);
+	}
+
 }

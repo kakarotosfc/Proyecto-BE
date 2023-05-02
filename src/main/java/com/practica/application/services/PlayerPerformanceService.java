@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.practica.application.persistence.models.PlayerPerformance;
+import com.practica.application.persistence.models.PlayerPerformanceId;
 import com.practica.application.repositories.PlayerPerformanceRepository;
 
 @Service
@@ -17,7 +19,7 @@ public class PlayerPerformanceService {
         playerPerformanceRepository.save(playerPerformance);
     }
 
-    public List<PlayerPerformance> list() {
-        return playerPerformanceRepository.findAll();
+    public PlayerPerformance find() {
+        return playerPerformanceRepository.findById();
     }
 }

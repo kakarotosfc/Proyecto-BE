@@ -1,20 +1,17 @@
 package com.practica.application.persistence.models;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "playerperformance")
+@Table(name = "player_performance")
 @Data
 public class PlayerPerformance {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String season;
+    
+    @EmbeddedId
+    private PlayerPerformanceId playerPerformanceId;
     private int matches;
     private int goals;
     private int assists;

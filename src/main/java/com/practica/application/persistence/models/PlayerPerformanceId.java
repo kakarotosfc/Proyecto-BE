@@ -8,4 +8,12 @@ import lombok.Data;
 public class PlayerPerformanceId {    
     private Long playerId;
     private String season;    
+
+    public PlayerPerformanceId() {
+    }
+
+    public PlayerPerformanceId(Long playerId, String season) {
+        this.playerId = playerId;
+        this.season = season;
+    }
 }

@@ -1,10 +1,9 @@
 package com.practica.application.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.practica.application.persistence.models.PlayerPerformance;
 import com.practica.application.persistence.models.PlayerPerformanceId;
@@ -19,7 +18,9 @@ public class PlayerPerformanceService {
         playerPerformanceRepository.save(playerPerformance);
     }
 
-    public PlayerPerformance find() {
-        return playerPerformanceRepository.findById();
+    public Optional<PlayerPerformance> find(Long playerId, String season) {
+        PlayerPerformanceId playerPerformanceId = new PlayerPerformanceId(playerId, season);
+
+        return playerPerformanceRepository.findById(playerPerformanceId);
     }
 }

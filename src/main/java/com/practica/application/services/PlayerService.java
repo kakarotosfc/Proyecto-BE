@@ -13,8 +13,16 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public void save(Player player) {
-        playerRepository.save(player);
+    public String save(Player player) {
+        
+        var playerName = playerRepository.findByName(player.getName());
+
+        if(playerName.size() == 0){
+            playerRepository.save(player);
+            return "Player " + player.getName() + " was saved successfully.";
+        }
+        else
+            return "Player " + player.getName() + " already exists. Cannot be saved again.";
     }
 
     public List<Player> list() {

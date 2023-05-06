@@ -13,15 +13,8 @@ public class SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
 
-    public String save(Season season) {
-        var seasonId = seasonRepository.findBySeason(season.getSeason());
-        
-        if(seasonId.size() == 0){
-            seasonRepository.save(season);
-            return "Season" + season.getSeason() + " was saved successfully";
-        }
-        else
-            return "Season" + season.getSeason() + " already exists. Cannot be saved again.";
+    public void save(Season season) {
+        seasonRepository.save(season);
     }
 
     public List<Season> list() {

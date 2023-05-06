@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS player (
   start_date DATE NOT NULL,
   departure_date DATE NULL,
   image_url VARCHAR(255) NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT name_unique_constraint UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS season (

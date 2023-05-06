@@ -44,3 +44,20 @@ CREATE TABLE IF NOT EXISTS player_performance (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
+
+CREATE TABLE IF NOT EXISTS team_performance (
+  season VARCHAR(50) NOT NULL,
+  played_matches INT NOT NULL,
+  won_matches INT NOT NULL,
+  drawn_matches INT NOT NULL,
+  lost_matches INT NOT NULL,
+  goals_for INT NOT NULL,
+  goals_against INT NOT NULL,
+  points INT NOT NULL,
+  position_per_rivals VARCHAR(50) NOT NULL,
+  CONSTRAINT fk_team_performance_season
+    FOREIGN KEY (season)
+    REFERENCES season (season)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);

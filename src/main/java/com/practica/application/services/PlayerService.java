@@ -15,9 +15,9 @@ public class PlayerService {
 
     public String save(Player player) {
         
-        var playerName = playerRepository.findByName(player.getName());
+        List<Player> playerName = playerRepository.findByName(player.getName());
 
-        if(playerName.size() == 0){
+        if(playerName.isEmpty()){
             playerRepository.save(player);
             return "Player " + player.getName() + " was saved successfully.";
         }

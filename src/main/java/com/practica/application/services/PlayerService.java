@@ -13,8 +13,9 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public void save(Player player) {
-        playerRepository.save(player);
+    public String save(Player player) {
+            playerRepository.save(player);
+            return "Player " + player.getName() + " was saved successfully.";
     }
         
     public List<Player> list() {

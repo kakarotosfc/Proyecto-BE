@@ -25,11 +25,11 @@ public class TeamPerformanceService {
     }
 
     public TeamPerformance find(String season) {
-        Optional<TeamPerformance> seasonToFind = teamPerformanceRepository.findById(season);
+        Optional<TeamPerformance> seasonOptional = teamPerformanceRepository.findById(season);
 
-        if(seasonToFind.isEmpty()){
+        if(seasonOptional.isEmpty()){
             return null;
         }
-        return seasonToFind.get();            
+        return seasonOptional.get();            
     }
 }

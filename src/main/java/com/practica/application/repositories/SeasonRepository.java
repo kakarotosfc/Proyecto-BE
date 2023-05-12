@@ -7,5 +7,5 @@ import com.practica.application.persistence.models.Season;
 
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Long> {
-    Season findFirstBySeason(String season);
+    
 }

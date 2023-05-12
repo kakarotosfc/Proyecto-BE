@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "player_data")
+@Table(name = "player")
 @Data
 public class Player {
     @Id

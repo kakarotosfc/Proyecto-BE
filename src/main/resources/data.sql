@@ -1,5 +1,10 @@
-CREATE SCHEMA IF NOT EXISTS kakarotos;
-USE kakarotos;
+CREATE SCHEMA IF NOT EXISTS kakarotosfc;
+USE kakarotosfc;
+
+drop table if exists team_performance;
+drop table if exists player_performance;
+drop table if exists season;
+drop table if exists player;
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,

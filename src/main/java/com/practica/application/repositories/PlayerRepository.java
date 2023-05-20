@@ -7,5 +7,5 @@ import com.practica.application.persistence.models.Player;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-    Player findFirstByName(String name);
+    
 }

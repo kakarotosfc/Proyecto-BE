@@ -1,6 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS kakarotosfc;
 USE kakarotosfc;
 
+--drop tables to keep testing clean on every try. This will be removed once we implement this productively. 
 drop table if exists team_performance;
 drop table if exists player_performance;
 drop table if exists season;

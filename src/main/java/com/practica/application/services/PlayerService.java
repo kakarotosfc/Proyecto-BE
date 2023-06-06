@@ -18,7 +18,9 @@ public class PlayerService {
     public String save(Player player) {
         try {
             playerRepository.save(player);
-            return "Player " + player.getName() + " was saved successfully.";
+            String playerSaved = "Player " + player.getName() + " was saved successfully";
+
+            return playerSaved;
             }
 
         catch(NestedRuntimeException ex) {

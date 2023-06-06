@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(DataSourceException.class)
-    public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataSourceException ex) {
+    public ResponseEntity<ErrorResponse> handleDataSourceException(DataSourceException ex) {
         
         ErrorResponse error = new ErrorResponse("Data Integrity Error",ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

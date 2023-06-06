@@ -18,8 +18,10 @@ public class SeasonService {
     public String save(Season season) {
         try {
             seasonRepository.save(season);
-            return "Season " + season.getSeason() + " was saved successfully.";
-            }
+            String seasonSaved = "Season " + season.getSeason() + "was saved successfully.";
+
+            return seasonSaved;
+        }
 
         catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());

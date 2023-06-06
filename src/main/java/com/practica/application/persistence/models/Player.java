@@ -24,5 +24,6 @@ public class Player {
     private int skills;
     private LocalDate startDate;
     private LocalDate departureDate;
+    private String imageUrl;
 
 }

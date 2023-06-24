@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.practica.application.exceptions.DataSourceException;
 import com.practica.application.persistence.models.Player;
 import com.practica.application.repositories.PlayerRepository;
+import com.practica.application.persistence.models.Constant;
 
 @Service
 public class PlayerService {
@@ -18,10 +19,10 @@ public class PlayerService {
     public String save(Player player) {
         try {
             playerRepository.save(player);
-            String playerSaved = "Player " + player.getName() + " was saved successfully";
-
-            return playerSaved;
-            }
+            Constant successfullResponse = new Constant();
+            
+            return successfullResponse.responseHandler(200);
+        }
 
         catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());

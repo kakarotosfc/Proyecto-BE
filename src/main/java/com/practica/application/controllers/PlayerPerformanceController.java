@@ -23,8 +23,7 @@ public class PlayerPerformanceController {
 
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody PlayerPerformance player) {
-		service.save(player);
-		return ResponseEntity.ok("Performance for this player was saved successfully.");
+		return ResponseEntity.ok(service.save(player));
 	}
 
 	@GetMapping("/find")

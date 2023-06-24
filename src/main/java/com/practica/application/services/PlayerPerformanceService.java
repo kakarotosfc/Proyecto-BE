@@ -19,7 +19,7 @@ public class PlayerPerformanceService {
         playerPerformanceRepository.save(playerPerformance);
         Constant successfullResponse = new Constant();
             
-        return successfullResponse.responseHandler(202);
+        return successfullResponse.responseHandler(200,2);
     }
 
     public Optional<PlayerPerformance> find(Long playerId, String season) {

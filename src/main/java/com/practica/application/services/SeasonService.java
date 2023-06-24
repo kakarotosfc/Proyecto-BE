@@ -21,7 +21,7 @@ public class SeasonService {
             seasonRepository.save(season);
             Constant successfullResponse = new Constant();
             
-            return successfullResponse.responseHandler(201);
+            return successfullResponse.responseHandler(200,1);
         }
 
         catch(NestedRuntimeException ex) {

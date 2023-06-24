@@ -1,24 +1,13 @@
 package com.practica.application.persistence.models;
 
 public class Constant {
-    public static final int playerSaved = 200;
-    public static final int seasonSaved = 201;
-    public static final int playerPerformanceSaved = 202;
-    public static final int teamPerformanceSaved = 203;
+    public static final int rowSaved = 200;
+    public static final String responseForSuccessfullSaving = " was saved successfully";
+    public static final String[] entitiesToSave = {"Player", "Season", "Player Performance", "Team Performance"};
     
-    
-    public String responseHandler(int codigoRespuesta) {
-        switch(codigoRespuesta) {
-            case playerSaved:
-                return  "Player was saved successfully.";
-            case seasonSaved:
-                return  "Season was saved successfully.";
-            case playerPerformanceSaved:
-                return  "Performance for this Player was saved successfully.";
-            case teamPerformanceSaved:
-                return  "Performance for this season was saved successfully.";
-                
-        }
+    public String responseHandler(int responseCode, int responseEntityNumber) {
+        if(responseCode == rowSaved)
+            return  entitiesToSave[responseEntityNumber] + responseForSuccessfullSaving;
         return null;
     }
 }

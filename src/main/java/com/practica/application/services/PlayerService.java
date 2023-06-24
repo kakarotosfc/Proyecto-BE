@@ -21,7 +21,7 @@ public class PlayerService {
             playerRepository.save(player);
             Constant successfullResponse = new Constant();
             
-            return successfullResponse.responseHandler(200);
+            return successfullResponse.responseHandler(200,0);
         }
 
         catch(NestedRuntimeException ex) {

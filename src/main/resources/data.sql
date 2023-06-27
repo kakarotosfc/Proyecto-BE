@@ -6,6 +6,8 @@ drop table if exists team_performance;
 drop table if exists player_performance;
 drop table if exists season;
 drop table if exists player;
+drop table if exists product;
+drop table if exists collection;
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -66,4 +68,26 @@ CREATE TABLE IF NOT EXISTS team_performance (
     REFERENCES season (season)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS collection (
+  collection VARCHAR(50) NOT NULL,
+  start_date DATE NULL,
+  end_date DATE NULL,
+  PRIMARY KEY (collection)
+);
+
+CREATE TABLE IF NOT EXISTS product (
+  id INT NOT NULL AUTO_INCREMENT,
+  description VARCHAR(255) NULL,
+  size VARCHAR(50) NULL,
+  price FLOAT NOT NULL,
+  units_available INT NOT NULL,
+  product_image VARCHAR(255) NULL,
+  collection VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (collection)
+  REFERENCES collection (collection)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
 );

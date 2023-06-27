@@ -7,7 +7,6 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
-import com.practica.application.persistence.models.Constant;
 import com.practica.application.persistence.models.Season;
 import com.practica.application.repositories.SeasonRepository;
 
@@ -15,13 +14,12 @@ import com.practica.application.repositories.SeasonRepository;
 public class SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
+    private static final String SUCCESS_RESPONSE = "Season was saved successfully";
 
     public String save(Season season) {
         try {
             seasonRepository.save(season);
-            Constant successfullResponse = new Constant();
-            
-            return successfullResponse.responseHandler(200,1);
+            return SUCCESS_RESPONSE;
         }
 
         catch(NestedRuntimeException ex) {

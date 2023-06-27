@@ -9,19 +9,17 @@ import org.springframework.stereotype.Service;
 import com.practica.application.exceptions.DataSourceException;
 import com.practica.application.persistence.models.Player;
 import com.practica.application.repositories.PlayerRepository;
-import com.practica.application.persistence.models.Constant;
 
 @Service
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
-
+    private static final String SUCCESS_RESPONSE = "Player was saved successfully";
+        
     public String save(Player player) {
         try {
             playerRepository.save(player);
-            Constant successfullResponse = new Constant();
-            
-            return successfullResponse.responseHandler(200,0);
+            return SUCCESS_RESPONSE;
         }
 
         catch(NestedRuntimeException ex) {

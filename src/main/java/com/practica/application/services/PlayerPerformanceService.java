@@ -14,8 +14,9 @@ public class PlayerPerformanceService {
     @Autowired
     private PlayerPerformanceRepository playerPerformanceRepository;
 
-    public void save(PlayerPerformance playerPerformance) {
+    public String save(PlayerPerformance playerPerformance) {
         playerPerformanceRepository.save(playerPerformance);
+        return "Performance for this Player was saved successfully.";          
     }
 
     public Optional<PlayerPerformance> find(Long playerId, String season) {

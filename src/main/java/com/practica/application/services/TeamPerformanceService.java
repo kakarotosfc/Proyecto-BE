@@ -15,8 +15,9 @@ public class TeamPerformanceService {
     @Autowired
     private TeamPerformanceRepository teamPerformanceRepository;
 
-    public void save(TeamPerformance teamPerformance) {
-        teamPerformanceRepository.save(teamPerformance);            
+    public String save(TeamPerformance teamPerformance) {
+        teamPerformanceRepository.save(teamPerformance);    
+        return "Performance for this season was saved successfully.";            
         }
         
  

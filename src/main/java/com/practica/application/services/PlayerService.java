@@ -15,7 +15,8 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
     private static final String SUCCESS_RESPONSE = "Player was saved successfully";
-        
+    private static final String EXCEPTION_RESPONSE = "There are no Players created to be shown.";
+
     public String save(Player player) {
         try {
             playerRepository.save(player);
@@ -28,11 +29,12 @@ public class PlayerService {
     }
       
     public List<Player> list() {
+        
         List<Player> allPlayers = playerRepository.findAll();
         
         if(!allPlayers.isEmpty())
             return allPlayers;
         else 
-            throw new DataSourceException("There are no Players created to be shown.");
+            throw new DataSourceException(EXCEPTION_RESPONSE);
     }
 }

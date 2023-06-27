@@ -15,6 +15,7 @@ public class SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
     private static final String SUCCESS_RESPONSE = "Season was saved successfully";
+    private static final String EXCEPTION_RESPONSE = "There are no Seasons created to be shown.";
 
     public String save(Season season) {
         try {
@@ -33,6 +34,6 @@ public class SeasonService {
         if(!allSeasons.isEmpty())
             return allSeasons;
         else 
-            throw new DataSourceException("There are no Seasons created to be shown.");
+            throw new DataSourceException(EXCEPTION_RESPONSE);
     }
 }

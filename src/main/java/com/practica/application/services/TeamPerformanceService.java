@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.practica.application.persistence.models.Constant;
 import com.practica.application.persistence.models.TeamPerformance;
 import com.practica.application.repositories.TeamPerformanceRepository;
 
@@ -17,10 +16,8 @@ public class TeamPerformanceService {
     private TeamPerformanceRepository teamPerformanceRepository;
 
     public String save(TeamPerformance teamPerformance) {
-        teamPerformanceRepository.save(teamPerformance);
-        Constant successfullResponse = new Constant();
-            
-        return successfullResponse.responseHandler(200,3);            
+        teamPerformanceRepository.save(teamPerformance);    
+        return "Performance for this season was saved successfully.";            
         }
         
  

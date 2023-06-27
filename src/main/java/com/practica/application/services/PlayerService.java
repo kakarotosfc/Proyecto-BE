@@ -14,16 +14,12 @@ import com.practica.application.repositories.PlayerRepository;
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
-    private static final String SUCCESS_RESPONSE = "Player was saved successfully";
     private static final String EXCEPTION_RESPONSE = "There are no Players created to be shown.";
 
-    public String save(Player player) {
+    public void save(Player player) {
         try {
             playerRepository.save(player);
-            return SUCCESS_RESPONSE;
-        }
-
-        catch(NestedRuntimeException ex) {
+        } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         }        
     }
@@ -32,9 +28,8 @@ public class PlayerService {
         
         List<Player> allPlayers = playerRepository.findAll();
         
-        if(!allPlayers.isEmpty())
-            return allPlayers;
-        else 
-            throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allPlayers.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        
+        return allPlayers;            
     }
 }

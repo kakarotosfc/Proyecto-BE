@@ -1,7 +1,5 @@
 package com.practica.application.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +20,13 @@ public class PlayerPerformanceController {
 	private PlayerPerformanceService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody PlayerPerformance player) {
-		return ResponseEntity.ok(service.save(player));
+	public ResponseEntity<?> save(@RequestBody PlayerPerformance player) {
+		service.save(player);
+		return ResponseEntity.ok("");
 	}
 
 	@GetMapping("/find")
-	public ResponseEntity<Optional<PlayerPerformance>> find(@RequestParam(name= "playerId") Long playerId, @RequestParam(name="season") String season) {
+	public ResponseEntity<PlayerPerformance> find(@RequestParam(name= "playerId") Long playerId, @RequestParam(name="season") String season) {
 		return ResponseEntity.ok(service.find(playerId, season));	
 	}
 }

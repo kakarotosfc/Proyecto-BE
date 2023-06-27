@@ -22,7 +22,8 @@ public class PlayerController {
 
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Player player) {
-		return ResponseEntity.ok(service.save(player));
+		service.save(player);
+		return ResponseEntity.ok("");
 	}
 
 	@GetMapping("/list")

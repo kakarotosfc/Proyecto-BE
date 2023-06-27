@@ -23,7 +23,7 @@ public class SeasonController {
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Season season) {
 		service.save(season);
-		return ResponseEntity.ok("Season was saved successfully");
+		return ResponseEntity.ok("");
 		
 	}
 

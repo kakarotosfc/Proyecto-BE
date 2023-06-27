@@ -14,16 +14,12 @@ import com.practica.application.repositories.SeasonRepository;
 public class SeasonService {
     @Autowired
     private SeasonRepository seasonRepository;
-    private static final String SUCCESS_RESPONSE = "Season was saved successfully";
     private static final String EXCEPTION_RESPONSE = "There are no Seasons created to be shown.";
 
-    public String save(Season season) {
+    public void save(Season season) {
         try {
             seasonRepository.save(season);
-            return SUCCESS_RESPONSE;
-        }
-
-        catch(NestedRuntimeException ex) {
+        } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         } 
     }
@@ -31,9 +27,8 @@ public class SeasonService {
     public List<Season> list() {
         List<Season> allSeasons = seasonRepository.findAll();
        
-        if(!allSeasons.isEmpty())
-            return allSeasons;
-        else 
-            throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allSeasons.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        
+        return allSeasons;            
     }
 }

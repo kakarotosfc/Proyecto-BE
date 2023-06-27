@@ -23,7 +23,8 @@ public class TeamPerformanceController {
 
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody TeamPerformance TeamPerformance) {
-		return ResponseEntity.ok(service.save(TeamPerformance));
+		service.save(TeamPerformance);
+		return ResponseEntity.ok("");
 	}
 
 	@GetMapping("/list")

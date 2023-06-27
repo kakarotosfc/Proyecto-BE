@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.practica.application.persistence.models.Constant;
 import com.practica.application.persistence.models.PlayerPerformance;
 import com.practica.application.persistence.models.PlayerPerformanceId;
 import com.practica.application.repositories.PlayerPerformanceRepository;
@@ -17,9 +16,7 @@ public class PlayerPerformanceService {
 
     public String save(PlayerPerformance playerPerformance) {
         playerPerformanceRepository.save(playerPerformance);
-        Constant successfullResponse = new Constant();
-            
-        return successfullResponse.responseHandler(200,2);
+        return "Performance for this Player was saved successfully.";          
     }
 
     public Optional<PlayerPerformance> find(Long playerId, String season) {

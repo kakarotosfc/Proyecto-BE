@@ -6,8 +6,10 @@ drop table if exists team_performance;
 drop table if exists player_performance;
 drop table if exists season;
 drop table if exists player;
+drop table if exists product_image;
 drop table if exists product;
 drop table if exists collection;
+
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -90,4 +92,16 @@ CREATE TABLE IF NOT EXISTS product (
   REFERENCES collection (collection)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS product_image (
+  id INT NOT NULL,
+  image_description VARCHAR(255) NULL,
+  image_url VARCHAR(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_product_image_id
+    FOREIGN KEY (id)
+    REFERENCES product (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 );

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.application.persistence.models.Product;
+import com.practica.application.persistence.models.ProductImage;
+import com.practica.application.persistence.models.UnitsPerSize;
 import com.practica.application.services.ProductService;
 
 @RestController
@@ -23,6 +25,16 @@ public class ProductController {
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody Product product) {
 		service.save(product);
+		return ResponseEntity.ok("");
+	}
+	@PostMapping("/save_images")
+	public ResponseEntity<String> save(@RequestBody ProductImage productImage) {
+		service.saveImages(productImage);
+		return ResponseEntity.ok("");
+	}
+	@PostMapping("/save_sizes_and_units")
+	public ResponseEntity<String> save(@RequestBody UnitsPerSize unitsPerSize) {
+		service.saveSizesAndUnits(unitsPerSize);
 		return ResponseEntity.ok("");
 	}
 

@@ -19,7 +19,7 @@ public class UnitsPerSize {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long unitPerSizeId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")

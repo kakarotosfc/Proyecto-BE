@@ -6,6 +6,11 @@ drop table if exists team_performance;
 drop table if exists player_performance;
 drop table if exists season;
 drop table if exists player;
+drop table if exists product_image;
+drop table if exists units_per_size;
+drop table if exists product;
+drop table if exists collection;
+
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -40,13 +45,11 @@ CREATE TABLE IF NOT EXISTS player_performance (
   red_cards INT NOT NULL,
   mvp_matches INT NOT NULL,
   CONSTRAINT fk_player_performance_player_id
-    FOREIGN KEY (player_id)
-    REFERENCES player (id)
+    FOREIGN KEY (player_id) REFERENCES player (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_player_performance_season
-    FOREIGN KEY (season)
-    REFERENCES season (season)
+    FOREIGN KEY (season) REFERENCES season (season)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -62,8 +65,49 @@ CREATE TABLE IF NOT EXISTS team_performance (
   points INT NOT NULL,
   position_per_rivals VARCHAR(50) NOT NULL,
   CONSTRAINT fk_team_performance_season
-    FOREIGN KEY (season)
-    REFERENCES season (season)
+    FOREIGN KEY (season) REFERENCES season (season)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS collection (
+  collection VARCHAR(50) NOT NULL,
+  start_date DATE NULL,
+  end_date DATE NULL,
+  PRIMARY KEY (collection)
+);
+
+CREATE TABLE IF NOT EXISTS product (
+  id INT NOT NULL AUTO_INCREMENT,
+  description VARCHAR(255) NULL,
+  price FLOAT NOT NULL,
+  collection VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (collection) REFERENCES collection (collection)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS product_image (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  image_description VARCHAR(255) NULL,
+  image_url VARCHAR(255) NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_product_image_product
+    FOREIGN KEY (product_id) REFERENCES product (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS units_per_size (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  size VARCHAR(255) NOT NULL,
+  units_available INT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_units_per_size_product FOREIGN KEY (product_id) REFERENCES product (id)
+   ON DELETE NO ACTION
+   ON UPDATE NO ACTION,
+  CONSTRAINT unique_product_id_size UNIQUE (product_id, size)
 );

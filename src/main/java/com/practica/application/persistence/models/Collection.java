@@ -17,5 +17,6 @@ public class Collection {
     private String collection;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String enabled;
     
 }

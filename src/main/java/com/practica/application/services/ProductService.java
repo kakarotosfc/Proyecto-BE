@@ -20,6 +20,7 @@ public class ProductService {
     
     private static final String EXCEPTION_RESPONSE = "There are no Products created to be shown.";
     private static final String EXCEPTION_NOT_FOUND = "Product received not exists.";
+
     public void save(Product product) {
         try {
             productRepository.save(product);
@@ -75,5 +76,23 @@ public class ProductService {
         return allProducts;            
     }
 
+    public Product find(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+
+        if(productOptional.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        
+        return productOptional.get();
+    }
     
+    public List<Product> findByActiveCollection() {
+        
+        try {         
+            List<Product> availableProducts = productRepository.findByCollectionJoin();
+            if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+
+            return availableProducts;
+        } catch(NestedRuntimeException ex) {
+            throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
+        }  
+    }
 }

@@ -1,6 +1,7 @@
 package com.practica.application.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class ProductController {
 	}
 
 		@GetMapping("/find_products_by_active_collection")
-	public List<Product> findActiveProducts() {
+	public List<Map<String, Object>> findActiveProducts() {
 		return (service.findByActiveCollection());
 	}
 }

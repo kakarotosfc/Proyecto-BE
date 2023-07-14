@@ -1,7 +1,10 @@
 package com.practica.application.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NestedRuntimeException;
@@ -84,15 +87,37 @@ public class ProductService {
         return productOptional.get();
     }
     
-    public List<Product> findByActiveCollection() {
+    public List<Map<String, Object>> findByActiveCollection() {
         
         try {         
             List<Product> availableProducts = productRepository.findByCollectionJoin();
             if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
-
-            return availableProducts;
+            
+            List<Map<String, Object>> t = groupProductsByCollection((availableProducts));
+            return t;
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         }  
+
+        
+        
+    }
+
+    public static List<Map<String, Object>> groupProductsByCollection(List<Product> productsToGroupBy) {
+
+        List<Map<String, Object>> groupedProducts = productsToGroupBy.stream()
+        .collect(Collectors.groupingBy(Product::getCollection))
+        .entrySet()
+        .stream()
+        .map(entry -> {
+            Map<String, Object> groupedProduct = new HashMap<>();
+            groupedProduct.put("collection", entry.getKey());
+            groupedProduct.put("products", entry.getValue());
+            return groupedProduct;
+        })
+        .collect(Collectors.toList());
+       
+        return groupedProducts;
+
     }
 }

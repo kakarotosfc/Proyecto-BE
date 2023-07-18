@@ -1,7 +1,10 @@
 package com.practica.application.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NestedRuntimeException;
@@ -20,6 +23,7 @@ public class ProductService {
     
     private static final String EXCEPTION_RESPONSE = "There are no Products created to be shown.";
     private static final String EXCEPTION_NOT_FOUND = "Product received not exists.";
+
     public void save(Product product) {
         try {
             productRepository.save(product);
@@ -75,5 +79,42 @@ public class ProductService {
         return allProducts;            
     }
 
+    public Product find(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+
+        if(productOptional.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        
+        return productOptional.get();
+    }
     
+    public List<Map<String, Object>> findByActiveCollection() {
+        
+        try {         
+            List<Product> availableProducts = productRepository.findByCollectionJoin();
+            if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+            
+            return groupProductsByCollection((availableProducts));
+
+        } catch(NestedRuntimeException ex) {
+            throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
+        }     
+    }
+
+    public static List<Map<String, Object>> groupProductsByCollection(List<Product> productsToGroupBy) {
+
+        List<Map<String, Object>> groupedProducts = productsToGroupBy.stream()
+        .collect(Collectors.groupingBy(Product::getCollection))
+        .entrySet()
+        .stream()
+        .map(entry -> {
+            Map<String, Object> groupedProduct = new HashMap<>();
+            groupedProduct.put("collection", entry.getKey());
+            groupedProduct.put("products", entry.getValue());
+            return groupedProduct;
+        })
+        .collect(Collectors.toList());
+       
+        return groupedProducts;
+
+    }
 }

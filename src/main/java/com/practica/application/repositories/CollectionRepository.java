@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.practica.application.persistence.models.Collection;
 
 @Repository
-public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    
+public interface CollectionRepository extends JpaRepository<Collection, String> {
 }

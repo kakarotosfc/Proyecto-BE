@@ -93,14 +93,11 @@ public class ProductService {
             List<Product> availableProducts = productRepository.findByCollectionJoin();
             if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
             
-            List<Map<String, Object>> t = groupProductsByCollection((availableProducts));
-            return t;
+            return groupProductsByCollection((availableProducts));
+
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
-        }  
-
-        
-        
+        }     
     }
 
     public static List<Map<String, Object>> groupProductsByCollection(List<Product> productsToGroupBy) {

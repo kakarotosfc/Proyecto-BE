@@ -25,6 +25,13 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+        @ExceptionHandler(DataSourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDataSourceNotFoundException(DataSourceNotFoundException ex) {
+        
+        ErrorResponse error = new ErrorResponse("Data Finding Error",ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(Exception ex) {
         

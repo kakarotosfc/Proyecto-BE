@@ -15,6 +15,8 @@ public class PlayerPerformance {
     private int matches;
     private int goals;
     private int assists;
+    private int goalsReceived;
+    private int cleanSheets;
     private int yellowCards;
     private int blueCards;
     private int redCards;

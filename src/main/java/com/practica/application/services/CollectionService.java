@@ -7,6 +7,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
+import com.practica.application.exceptions.DataSourceNotFoundException;
 import com.practica.application.persistence.models.Collection;
 import com.practica.application.repositories.CollectionRepository;
 
@@ -27,7 +28,7 @@ public class CollectionService {
     public List<Collection> list() {
         List<Collection> allCollections = collectionRepository.findAll();
        
-        if(allCollections.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allCollections.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
         return allCollections;            
     }

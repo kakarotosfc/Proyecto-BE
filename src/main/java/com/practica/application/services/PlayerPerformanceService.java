@@ -7,6 +7,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
+import com.practica.application.exceptions.DataSourceNotFoundException;
 import com.practica.application.persistence.models.PlayerPerformance;
 import com.practica.application.persistence.models.PlayerPerformanceId;
 import com.practica.application.repositories.PlayerPerformanceRepository;
@@ -29,7 +30,7 @@ public class PlayerPerformanceService {
         PlayerPerformanceId playerPerformanceId = new PlayerPerformanceId(playerId, season);
         Optional<PlayerPerformance> playerToFind  = playerPerformanceRepository.findById(playerPerformanceId);
 
-        if(playerToFind.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(playerToFind.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
 
         return playerToFind.get();     
     }

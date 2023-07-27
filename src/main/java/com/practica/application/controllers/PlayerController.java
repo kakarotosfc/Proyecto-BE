@@ -26,8 +26,8 @@ public class PlayerController {
 		return ResponseEntity.ok("");
 	}
 
-	@GetMapping("/list")
-	public ResponseEntity<List<Player>> list() {
-		return ResponseEntity.ok(service.list());
+	@GetMapping("/list_active_players")
+	public ResponseEntity<List<Player>> listActivePlayers() {
+		return ResponseEntity.ok(service.listActivePlayers());
 	}
 }

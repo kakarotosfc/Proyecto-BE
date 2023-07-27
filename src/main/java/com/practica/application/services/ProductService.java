@@ -93,7 +93,7 @@ public class ProductService {
             List<Product> availableProducts = productRepository.findByCollectionJoin();
             if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
             
-            return groupProductsByCollection((availableProducts));
+            return groupProductsByCollection(availableProducts);
 
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());

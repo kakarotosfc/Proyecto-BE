@@ -7,6 +7,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
+import com.practica.application.exceptions.DataSourceNotFoundException;
 import com.practica.application.persistence.models.Season;
 import com.practica.application.repositories.SeasonRepository;
 
@@ -27,7 +28,7 @@ public class SeasonService {
     public List<Season> list() {
         List<Season> allSeasons = seasonRepository.findAll();
        
-        if(allSeasons.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allSeasons.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
         return allSeasons;            
     }

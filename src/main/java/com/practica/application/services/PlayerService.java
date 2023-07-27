@@ -7,6 +7,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
+import com.practica.application.exceptions.DataSourceNotFoundException;
 import com.practica.application.persistence.models.Player;
 import com.practica.application.repositories.PlayerRepository;
 
@@ -24,12 +25,12 @@ public class PlayerService {
         }        
     }
       
-    public List<Player> list() {
+    public List<Player> listActivePlayers() {
         
-        List<Player> allPlayers = playerRepository.findAll();
+        List<Player> allActivePlayersPlayers = playerRepository.findByDepartureDateIsNull();
         
-        if(allPlayers.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allActivePlayersPlayers.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
-        return allPlayers;            
+        return allActivePlayersPlayers;            
     }
 }

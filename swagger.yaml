@@ -1,0 +1,527 @@
+openapi: 3.0.3
+info:
+  title: Kakarotos Webpage
+  description: Esta API permite acceder y añadir información relacionada con el equipo Kakarotos FC. Permite agregar información personal de los jugadores e información de rendimiento a nivel individual y colectivo. También permite acceder a ella a traves de búsquedas individuales o del equipo. Por último, cuenta con una tienda donde se encuentran los productos asociados con la marca detrás del equipo (uniformes completos o piezas individuales).
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+- name: player
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Player. Permite crear, modificar y consultar registros de la entidad que contiene información personal y de posición del jugador.
+- name: season
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Season. Permite crear, modificar y consultar registros de la entidad que contiene la información de las temporadas, principalmente las fechas de inicio y final.
+- name: player_performance
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Player Performance. Permite crear, modificar y consultar registros de la entidad (a nivel general y también a partir del id de un jugador en específico).
+- name: team_performance
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Team Performance. Permite crear, modificar y consultar registros de la entidad (a nivel general y también a partir del id de un jugador en específico).
+- name: collection
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Collection. Permite crear, modificar y consultar registros de la entidad que contiene la información de las colecciones de productos de la tienda, principalmente las fechas de inicio y final.  
+- name: product
+  description: En este tag se encuentran todos los endpoints asociados a la entidad Product y a sus entidades asociadas (Product Image, Units per Size). Permite crear, modificar y consultar registros de la entidad (a nivel general y también a partir del id de las colecciones activas).
+paths:
+  /player/save:
+    post:
+      tags:
+        - player
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Player. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /season/save:
+    post:
+      tags:
+        - season
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Season
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Season'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /player_performance/save:
+    post:
+      tags:
+        - player_performance
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Player Performance. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerPerformance'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /team_performance/save:
+    post:
+      tags:
+        - team_performance
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Team Performance. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamPerformance'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /collection/save:
+    post:
+      tags:
+        - collection
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Collection. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collection'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /product/save:
+    post:
+      tags:
+        - product
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Product. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /product/save_images:
+    post:
+      tags:
+        - product
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Product Image. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImage'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /product/save_sizes_and_units:
+    post:
+      tags:
+        - product
+      summary: Inserta o actualiza la información de un nuevo registro en la entidad Units per Size. 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitsPerSize'
+      responses:
+        200:
+          description: Entidad guardada exitosamente.
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /player/list_active_players:
+    get:
+      tags:
+        - player
+      summary: Obtiene y devuelve una lista de todos los registros de la entidad Player que cumplan con la condición departure_date = null. Si el registro tiene algún valor distinto, el endpoint no lo devuelve.
+      responses:
+        200: 
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /season/list:
+    get:
+      tags:
+        - season
+      summary: Obtiene y devuelve una lista de todos los registros de la entidad Season.
+      responses:
+        200: 
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Season'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /team_performance/list:
+    get:
+      tags:
+        - team_performance
+      summary: Obtiene y devuelve una lista de todos los registros de la entidad Team Performance.
+      responses:
+        200: 
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamPerformance'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /collection/list:
+    get:
+      tags:
+        - collection
+      summary: Obtiene y devuelve una lista de todos los registros de la entidad Collection.
+      responses:
+        200: 
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /product/list:
+    get:
+      tags:
+        - product
+      summary: Obtiene y devuelve una lista de todos los registros de la entidad Product.
+      responses:
+        200: 
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductToShow'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /player_performance/find:
+    get:
+      tags:
+        - player_performance
+      summary: Obtiene y devuelve un registro de la entidad Player Performance a partir de los parámetros playerId (relacionado con la entidad Player) y season (relacionado con la entidad Season)
+      parameters:
+        - name: playerId
+          in: query
+          description: id del jugador en la entidad player
+          required: true
+          schema:
+            type: integer
+        - name: season
+          in: query
+          description: temporada por la que se quiere consultar
+          required: true 
+          schema: 
+            type: string
+      responses:
+        200:
+          description: (Ok) El endpoint devuelve el registro consultado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerPerformance'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /team_performance/find:
+    get:
+      tags:
+        - team_performance
+      summary: Obtiene y devuelve un registro de la entidad Team Performance a partir del parámetro season (relacionado con la entidad Season)
+      parameters:
+        - name: season
+          in: query
+          description: temporada por la que se quiere consultar
+          required: true 
+          schema: 
+            type: string
+      responses:
+        200:
+          description: (Ok) El registro consultado se encontró exitosamente y devolvió exitosamente.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TeamPerformance'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /product/find:
+    get:
+      tags:
+        - product
+      summary: Obtiene y devuelve un registro de la entidad Product a partir del parámetro productId (relacionado con la entidad product)
+      parameters:
+        - name: productId
+          in: query
+          description: id del producto en la entidad product
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: (Ok) El registro consultado se encontró exitosamente y devolvió exitosamente.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ProductToShow'
+  /find_products_by_active_collection:
+    get:
+      tags:
+        - product
+      summary: Obtiene y devuelve todos los registros de la entidad product cuyo valor del campo collection tengan un registro en la entidad collection con valor true en el campo enabled. Además, reagrupa los resultados en clave valor a partir del campo collection. 
+      responses:
+        200:
+          description: (Ok) El endpoint devuelve al menos un registro exitosamente.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ProductToShowAsMap'
+components:
+  responses:
+    BadRequest:
+      description: (Bad Request) no es un formato de mensaje que cumpla con el tipo de dato para alguno de los parámetros. 
+    NotFound:
+      description: (Not Found) no se encuentra ningún registro en la entidad que se consulta o los parámetros enviados no corresponden a ningún registro en específico.
+    ServerError:
+      description: Error en el servidor.
+  schemas:
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        number:
+          type: integer
+        position:
+          type: string
+        foot:
+          type: string
+          maxLength: 1
+        weakFoot:
+          type: integer
+        skills:
+          type: integer
+        startDate:
+          type: string
+          format: date
+        departureDate:
+          type: string
+          format: date
+        imageUrl:
+          type: string
+
+    PlayerPerformance:
+      type: object
+      properties:
+        playerPerformanceId:
+          $ref: '#/components/schemas/PlayerPerformanceId'
+        matches:
+          type: integer
+        goals:
+          type: integer
+        assists:
+          type: integer
+        goalsReceived:
+          type: integer
+        cleanSheets:
+          type: integer
+        yellowCards:
+          type: integer
+        blueCards:
+          type: integer
+        redCards:
+          type: integer
+        mvpMatches:
+          type: integer
+
+    PlayerPerformanceId:
+      type: object
+      properties:
+        playerId:
+          type: integer
+          format: int64
+        season:
+          type: string
+
+    Season:
+      type: object
+      properties:
+        season:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+
+    TeamPerformance:
+      type: object
+      properties:
+        season:
+          type: string
+        playedMatches:
+          type: integer
+        wonMatches:
+          type: integer
+        drawnMatches:
+          type: integer
+        lostMatches:
+          type: integer
+        goalsFor:
+          type: integer
+        goalsAgainst:
+          type: integer
+        points:
+          type: integer
+        positionPerRivals:
+          type: string
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        collection:
+          type: string
+
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        imageDescription:
+          type: string
+        imageUrl:
+          type: string
+
+    UnitsPerSize:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        size:
+          type: string
+        unitsAvailable:
+          type: integer
+    Collection:
+      type: object
+      properties:
+        collection:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        enabled:
+          type: boolean
+    ProductToShow:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+        price:
+          type: number
+          format: double
+        collection:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+        unitsPerSizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnitsPerSize'
+    ProductToShowAsMap:
+      type: object
+      properties:
+        collection:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductToShow'       

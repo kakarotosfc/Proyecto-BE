@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
@@ -44,5 +43,12 @@ public class ControllerExceptionHandler {
         
         ErrorResponse error = new ErrorResponse("Type Mismatch error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessForbiddenException.class)
+    public ResponseEntity<ErrorResponse> handleAccessForbiddenException(AccessForbiddenException ex) {
+        
+        ErrorResponse error = new ErrorResponse("Accessing error",ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 }

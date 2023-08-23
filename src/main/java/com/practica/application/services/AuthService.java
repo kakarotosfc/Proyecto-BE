@@ -1,35 +1,55 @@
 package com.practica.application.services;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
-import com.practica.application.exceptions.DataSourceNotFoundException;
-import com.practica.application.persistence.models.Season;
-import com.practica.application.repositories.SeasonRepository;
+import com.practica.application.persistence.models.Auth;
+import com.practica.application.repositories.AuthRepository;
 
 @Service
-public class SeasonService {
+public class AuthService {
     @Autowired
-    private SeasonRepository seasonRepository;
-    private static final String EXCEPTION_RESPONSE = "There are no Seasons created to be shown.";
+    private AuthRepository authRepository;
+    private static final String EXCEPTION_RESPONSE = "Client has been created already";
 
-    public void save(Season season) {
+    public void createToken(String client) {
         try {
-            seasonRepository.save(season);
+            
+            Optional<Auth> clientToValidate = authRepository.findById(client);
+            
+            if(!clientToValidate.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+            
+            Auth clientToCreateToken = new Auth();
+            
+            clientToCreateToken.setClient(client);
+            clientToCreateToken.setToken(UUID.randomUUID().toString().toLowerCase());
+            clientToCreateToken.setGenerationDate(LocalDate.now());
+            
+            authRepository.save(clientToCreateToken);
+
+        } catch(NestedRuntimeException ex) {
+            throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
+        }
+    }
+
+    public String getToken(String client) {
+        try {
+            
+            Auth clientFound = new Auth();
+            Optional<Auth> clientToValidate = authRepository.findById(client);
+            
+            if(clientToValidate.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+            clientFound = clientToValidate.orElse(null);
+            return clientFound.getToken();
+            
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         } 
-    }
-
-    public List<Season> list() {
-        List<Season> allSeasons = seasonRepository.findAll();
-       
-        if(allSeasons.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
-        
-        return allSeasons;            
     }
 }

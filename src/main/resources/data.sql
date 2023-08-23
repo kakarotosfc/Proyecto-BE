@@ -103,3 +103,10 @@ CREATE TABLE IF NOT EXISTS units_per_size (
    ON UPDATE NO ACTION,
   CONSTRAINT unique_product_id_size UNIQUE (product_id, size)
 );
+
+CREATE TABLE IF NOT EXISTS auth (
+  client VARCHAR(50) NOT NULL,
+  token VARCHAR(36) NULL,
+  generation_date DATE NULL,
+  PRIMARY KEY (client)
+);

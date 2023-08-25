@@ -7,5 +7,5 @@ import com.practica.application.persistence.models.Auth;
 
 @Repository
 public interface AuthRepository extends JpaRepository<Auth, String> {
-    
+    Auth findByToken(String token);
 }

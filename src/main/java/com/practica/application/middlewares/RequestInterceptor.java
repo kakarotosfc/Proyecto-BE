@@ -21,15 +21,11 @@ public class RequestInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         
-        System.out.println("Intercepted request: " + request.getRequestURI());       
+        String tokenFromDatabase = authService.getToken(request.getHeader("Token"));
         
-        String clientFromRequest =  request.getHeader("Client");
-        String tokenFromRequest = request.getHeader("Token");
-        String tokenFromDatabase = authService.getToken(clientFromRequest);
-        
-        if(tokenFromRequest.equals(tokenFromDatabase))
-            return true;
-        throw new AccessForbiddenException(FORBIDDEN);
+        if(tokenFromDatabase.isEmpty()) throw new AccessForbiddenException(FORBIDDEN);
+
+        return true;
     }
 
     @Override

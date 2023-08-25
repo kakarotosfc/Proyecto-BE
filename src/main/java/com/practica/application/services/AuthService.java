@@ -1,7 +1,6 @@
 package com.practica.application.services;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +15,11 @@ import com.practica.application.repositories.AuthRepository;
 public class AuthService {
     @Autowired
     private AuthRepository authRepository;
-    private static final String EXCEPTION_RESPONSE = "Client has been created already";
+    private static final String EXCEPTION_RESPONSE = "Token does not exist.";
 
     public void createToken(String client) {
         try {
-            
-            Optional<Auth> clientToValidate = authRepository.findById(client);
-            
-            if(!clientToValidate.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
-            
+                        
             Auth clientToCreateToken = new Auth();
             
             clientToCreateToken.setClient(client);
@@ -38,15 +33,14 @@ public class AuthService {
         }
     }
 
-    public String getToken(String client) {
+    public String getToken(String token) {
         try {
             
-            Auth clientFound = new Auth();
-            Optional<Auth> clientToValidate = authRepository.findById(client);
+            Auth clientToValidate = authRepository.findByToken(token);
+
+            if(clientToValidate == null) throw new DataSourceException(EXCEPTION_RESPONSE);
             
-            if(clientToValidate.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
-            clientFound = clientToValidate.orElse(null);
-            return clientFound.getToken();
+            return clientToValidate.getToken();
             
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());

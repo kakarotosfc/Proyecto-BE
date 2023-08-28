@@ -1,29 +1,37 @@
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.practica.application.middlewares;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.practica.application.exceptions.AccessForbiddenException;
+import com.practica.application.services.AuthService;
+
 @Component
-public class CustomInterceptor implements HandlerInterceptor {
+public class RequestInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private AuthService authService;
+    private static final String FORBIDDEN = "Client or token invalid.";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // Your pre-processing logic here
-        System.out.println("Intercepted request: " + request.getRequestURI());
         
-        // Return true to allow request processing to continue, or false to stop processing
+        String tokenFromDatabase = authService.getToken(request.getHeader("Token"));
+        
+        if(tokenFromDatabase.isEmpty()) throw new AccessForbiddenException(FORBIDDEN);
+
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        // Your post-processing logic here
-    }
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {}
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // Your completion logic here
-    }
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {}
+
 }   

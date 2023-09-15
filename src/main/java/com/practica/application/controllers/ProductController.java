@@ -23,9 +23,9 @@ public class ProductController {
 	private ProductService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Product product) {
-		service.save(product);
-		return ResponseEntity.ok("");
+	public ResponseEntity<ResponseId> save(@RequestBody Product product) {
+		ResponseId responseId = new ResponseId(service.save(product).getId());
+		return ResponseEntity.ok(responseId);
 	}
 	@PostMapping("/save_images")
 	public ResponseEntity<String> save(@RequestBody ImageRequest imageRequest) {//

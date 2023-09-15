@@ -17,9 +17,9 @@ public class CollectionService {
     private CollectionRepository collectionRepository;
     private static final String EXCEPTION_RESPONSE = "There are no Collections created to be shown.";
 
-    public void save(Collection collection) {
+    public Collection save(Collection collection) {
         try {
-            collectionRepository.save(collection);
+            return collectionRepository.save(collection);
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         } 

@@ -21,9 +21,9 @@ public class PlayerController {
 	private PlayerService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Player player) {
-		service.save(player);
-		return ResponseEntity.ok("");
+	public ResponseEntity<ResponseId> save(@RequestBody Player player) {
+		ResponseId responseId = new ResponseId(service.save(player).getId());
+		return ResponseEntity.ok(responseId);
 	}
 
 	@GetMapping("/list_active_players")
@@ -31,3 +31,5 @@ public class PlayerController {
 		return ResponseEntity.ok(service.listActivePlayers());
 	}
 }
+
+

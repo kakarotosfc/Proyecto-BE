@@ -21,10 +21,9 @@ public class SeasonController {
 	private SeasonService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Season season) {
-		service.save(season);
-		return ResponseEntity.ok("");
-		
+	public ResponseEntity<ResponseId> save(@RequestBody Season season) {
+		ResponseId responseId = new ResponseId(service.save(season).getSeason());
+		return ResponseEntity.ok(responseId);		
 	}
 
 	@GetMapping("/list")

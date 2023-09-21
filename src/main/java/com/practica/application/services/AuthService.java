@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
+import com.practica.application.exceptions.AccessForbiddenException;
 import com.practica.application.exceptions.DataSourceException;
 import com.practica.application.persistence.models.Auth;
 import com.practica.application.repositories.AuthRepository;
@@ -38,7 +39,7 @@ public class AuthService {
             
             Auth clientToValidate = authRepository.findByToken(token);
 
-            if(clientToValidate == null) throw new DataSourceException(EXCEPTION_RESPONSE);
+            if(clientToValidate == null) throw new AccessForbiddenException(EXCEPTION_RESPONSE);
             
             return clientToValidate.getToken();
             

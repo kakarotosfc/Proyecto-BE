@@ -31,7 +31,7 @@ public class TeamPerformanceService {
     public List<TeamPerformance> list() {
         var allPerformances = teamPerformanceRepository.findAll();
 
-        if(allPerformances.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allPerformances.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
         return allPerformances;
     }

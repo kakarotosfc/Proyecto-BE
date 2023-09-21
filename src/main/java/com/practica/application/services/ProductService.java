@@ -11,6 +11,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 
 import com.practica.application.exceptions.DataSourceException;
+import com.practica.application.exceptions.DataSourceNotFoundException;
 import com.practica.application.persistence.models.Product;
 import com.practica.application.persistence.models.ProductImage;
 import com.practica.application.persistence.models.UnitsPerSize;
@@ -74,7 +75,7 @@ public class ProductService {
     public List<Product> list() {
         
         List<Product> allProducts = productRepository.findAll();        
-        if(allProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(allProducts.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
         return allProducts;            
     }
@@ -82,7 +83,7 @@ public class ProductService {
     public Product find(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
 
-        if(productOptional.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+        if(productOptional.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
         
         return productOptional.get();
     }
@@ -91,7 +92,7 @@ public class ProductService {
         
         try {         
             List<Product> availableProducts = productRepository.findByCollectionJoin();
-            if(availableProducts.isEmpty()) throw new DataSourceException(EXCEPTION_RESPONSE);
+            if(availableProducts.isEmpty()) throw new DataSourceNotFoundException(EXCEPTION_RESPONSE);
             
             return groupProductsByCollection(availableProducts);
 

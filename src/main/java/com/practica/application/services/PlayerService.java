@@ -17,9 +17,9 @@ public class PlayerService {
     private PlayerRepository playerRepository;
     private static final String EXCEPTION_RESPONSE = "There are no Players created to be shown.";
 
-    public void save(Player player) {
+    public Player save(Player player) {
         try {
-            playerRepository.save(player);
+            return playerRepository.save(player);
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         }        

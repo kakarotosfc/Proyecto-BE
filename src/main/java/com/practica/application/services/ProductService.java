@@ -24,9 +24,9 @@ public class ProductService {
     private static final String EXCEPTION_RESPONSE = "There are no Products created to be shown.";
     private static final String EXCEPTION_NOT_FOUND = "Product received not exists.";
 
-    public void save(Product product) {
+    public Product save(Product product) {
         try {
-            productRepository.save(product);
+            return productRepository.save(product);
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         }        

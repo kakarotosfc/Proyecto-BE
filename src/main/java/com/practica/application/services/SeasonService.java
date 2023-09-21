@@ -17,9 +17,9 @@ public class SeasonService {
     private SeasonRepository seasonRepository;
     private static final String EXCEPTION_RESPONSE = "There are no Seasons created to be shown.";
 
-    public void save(Season season) {
+    public Season save(Season season) {
         try {
-            seasonRepository.save(season);
+            return seasonRepository.save(season);
         } catch(NestedRuntimeException ex) {
             throw new DataSourceException(ex.getRootCause().getLocalizedMessage());
         } 

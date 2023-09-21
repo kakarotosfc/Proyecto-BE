@@ -21,9 +21,9 @@ public class CollectionController {
 	private CollectionService service;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody Collection collection) {
-		service.save(collection);
-		return ResponseEntity.ok("");
+	public ResponseEntity<ResponseId> save(@RequestBody Collection collection) {
+		ResponseId responseId = new ResponseId(service.save(collection).getCollection());
+		return ResponseEntity.ok(responseId);
 		
 	}
 

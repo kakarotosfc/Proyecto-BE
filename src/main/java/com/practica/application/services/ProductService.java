@@ -37,7 +37,7 @@ public class ProductService {
         try {
             Optional<Product> optionalProductId = productRepository.findById(productId);
             if(optionalProductId.isEmpty()) {
-                throw new DataSourceException(EXCEPTION_NOT_FOUND);
+                throw new DataSourceNotFoundException(EXCEPTION_NOT_FOUND);
             }
             Product product = optionalProductId.get();
             ProductImage productImage = new ProductImage();
@@ -56,7 +56,7 @@ public class ProductService {
         try {
             Optional<Product> optionalProductId = productRepository.findById(productId);
             if(optionalProductId.isEmpty()) {
-                throw new DataSourceException(EXCEPTION_NOT_FOUND);
+                throw new DataSourceNotFoundException(EXCEPTION_NOT_FOUND);
             }
             Product product = optionalProductId.get();
             UnitsPerSize unitsPerSize = new UnitsPerSize();

@@ -1,4 +1,4 @@
-/*package com.practica.application.configs;
+package com.practica.application.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,4 +18,3 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(requestInterceptor);
     }
 }
-*/

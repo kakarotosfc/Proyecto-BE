@@ -1,4 +1,4 @@
-/*package com.practica.application.middlewares;
+package com.practica.application.middlewares;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,4 +40,3 @@ public class RequestInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {}
 
 }   
-*/

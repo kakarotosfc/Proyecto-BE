@@ -26,10 +26,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         String tokenFromDatabase = authService.getToken(request.getHeader("Token"));
         
         if(tokenFromDatabase.isEmpty()) throw new AccessForbiddenException(FORBIDDEN);
-        //        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Origin", "*"); // * = all domainName
-        response.setHeader("Access-Control-Allow-Credentials", "true"); // allow CrossDomain to use Origin Domain
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+    
         return true;
     }
 

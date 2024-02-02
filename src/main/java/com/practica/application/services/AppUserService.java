@@ -1,6 +1,7 @@
 package com.practica.application.services;
 
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import com.practica.application.dto.CreateAppUserDto;
 import com.practica.application.dto.MessageDto;
 import com.practica.application.enums.RoleName;
 import com.practica.application.persistence.models.AppUser;
-import com.practica.application.persistence.models.Role;
+import com.practica.application.persistence.models.Roles;
 import com.practica.application.repositories.AppUserRepository;
 import com.practica.application.repositories.RoleRepository;
 
@@ -25,18 +26,17 @@ public class AppUserService {
 
     public MessageDto createUser(CreateAppUserDto dto){
         AppUser appUser = AppUser.builder()
-                .username(dto.userName())
+                .username(dto.username())
                 .password(passwordEncoder.encode(dto.password()))
                 .build();
-    
-        String roleName = dto.role(); // Obtener el rol como un solo String
-    
-        Role role = repository.findByRole(RoleName.valueOf(roleName))
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-    
-        appUser.setRole(Collections.singleton(role)); // Usar Collections.singleton para crear un conjunto con un solo elemento
+        Set<Roles> roles = new HashSet<>();
+        dto.roles().forEach(r -> {
+            Roles role = repository.findByRole(RoleName.valueOf(r))
+                    .orElseThrow(()-> new RuntimeException("role not found"));
+            roles.add(role);
+        });
+        appUser.setRoles(roles);
         appUserRepository.save(appUser);
-    
         return new MessageDto("user " + appUser.getUsername() + " saved");
     }
 }

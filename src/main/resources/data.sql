@@ -129,30 +129,25 @@ CREATE TABLE IF NOT EXISTS roles (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS app_user_role (
-  app_user_id INT NOT NULL,
-  role_id INT NOT NULL,
-  PRIMARY KEY (app_user_id, role_id),
-  FOREIGN KEY (role_id) REFERENCES roles (id)
-);
-
 CREATE TABLE IF NOT EXISTS app_user (
   id INT AUTO_INCREMENT NOT NULL,
   credentials_expired BOOLEAN NULL,
   disabled BOOLEAN NULL,
   expired BOOLEAN NULL,
   locked BOOLEAN NULL,
-  password BOOLEAN NULL,
-  username BOOLEAN NULL,
+  password VARCHAR(255) NULL,
+  username VARCHAR(255) NULL,
   PRIMARY KEY (id)
 );
 
-ALTER TABLE app_user_role
-ADD CONSTRAINT fk_app_user_role_app_user
-FOREIGN KEY (app_user_id)
-REFERENCES app_user (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+CREATE TABLE IF NOT EXISTS app_user_role (
+  id INT AUTO_INCREMENT NOT NULL,
+  app_user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (app_user_id) REFERENCES app_user (id),
+  FOREIGN KEY (role_id) REFERENCES roles (id)
+);
 
 insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
 insert into kakarotosfc.roles values (2,"ROLE_USER");

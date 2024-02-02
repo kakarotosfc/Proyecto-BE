@@ -9,6 +9,9 @@ drop table if exists kakarotosfc.units_per_size;
 drop table if exists kakarotosfc.product_image;
 drop table if exists kakarotosfc.product;
 drop table if exists kakarotosfc.collection;
+drop table if exists kakarotosfc.app_user_role;
+drop table if exists kakarotosfc.app_user;
+drop table if exists kakarotosfc.roles;
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -119,6 +122,41 @@ CREATE TABLE IF NOT EXISTS auth (
   generation_date DATE NULL,
   PRIMARY KEY (client)
 );
+
+CREATE TABLE IF NOT EXISTS roles (
+  id INT NOT NULL,
+  role VARCHAR(255) NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS app_user_role (
+  app_user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  PRIMARY KEY (app_user_id, role_id),
+  FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+
+CREATE TABLE IF NOT EXISTS app_user (
+  id INT AUTO_INCREMENT NOT NULL,
+  credentials_expired BOOLEAN NULL,
+  disabled BOOLEAN NULL,
+  expired BOOLEAN NULL,
+  locked BOOLEAN NULL,
+  password BOOLEAN NULL,
+  username BOOLEAN NULL,
+  PRIMARY KEY (id)
+);
+
+ALTER TABLE app_user_role
+ADD CONSTRAINT fk_app_user_role_app_user
+FOREIGN KEY (app_user_id)
+REFERENCES app_user (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
+insert into kakarotosfc.roles values (2,"ROLE_USER");
+
 /*
 insert into kakarotosfc.player values (1, 'Franco Madou', 1, 'Goalkeeper', 'R', 1, 4, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');
 insert into kakarotosfc.player values (2, 'Evanilson Dos Santos', 2, 'Defender', 'R', 2, 3, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');

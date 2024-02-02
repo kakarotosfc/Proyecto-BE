@@ -1,6 +1,7 @@
 package com.practica.application.persistence.models;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,21 +22,21 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class AppUser implements UserDetails {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     private String password;
-    private Collection<? extends GrantedAuthority> role;
+    private Set<Roles> roles;
     private boolean expired = false;
     private boolean locked = false;
     private boolean credentialsExpired = false;
     private boolean disabled = false;
-    
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role;
+        return roles;
     }
 
     @Override

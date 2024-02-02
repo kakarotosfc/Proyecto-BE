@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class Role implements GrantedAuthority{
+public class Roles implements GrantedAuthority{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -31,7 +31,6 @@ public class Role implements GrantedAuthority{
 
     @Override
     public String getAuthority() {
-        
         return role.name();
     }
 }

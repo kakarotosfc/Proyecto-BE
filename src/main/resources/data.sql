@@ -9,9 +9,10 @@ drop table if exists kakarotosfc.units_per_size;
 drop table if exists kakarotosfc.product_image;
 drop table if exists kakarotosfc.product;
 drop table if exists kakarotosfc.collection;
-drop table if exists kakarotosfc.app_user_role;
+/*drop table if exists kakarotosfc.app_user_role;
 drop table if exists kakarotosfc.app_user;
 drop table if exists kakarotosfc.roles;
+*/
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -149,9 +150,9 @@ CREATE TABLE IF NOT EXISTS app_user_role (
   FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
-insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
+/*insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
 insert into kakarotosfc.roles values (2,"ROLE_USER");
-
+*/
 /*
 insert into kakarotosfc.player values (1, 'Franco Madou', 1, 'Goalkeeper', 'R', 1, 4, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');
 insert into kakarotosfc.player values (2, 'Evanilson Dos Santos', 2, 'Defender', 'R', 2, 3, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');

@@ -9,6 +9,11 @@ drop table if exists kakarotosfc.units_per_size;
 drop table if exists kakarotosfc.product_image;
 drop table if exists kakarotosfc.product;
 drop table if exists kakarotosfc.collection;
+DROP TABLE IF EXISTS kakarotosfc.client_authentication_methods;
+DROP TABLE IF EXISTS kakarotosfc.client_authorization_grant_types;
+DROP TABLE IF EXISTS kakarotosfc.client_redirect_uris;
+DROP TABLE IF EXISTS kakarotosfc.client_scopes;
+DROP TABLE IF EXISTS kakarotosfc.client;
 /*drop table if exists kakarotosfc.app_user_role;
 drop table if exists kakarotosfc.app_user;
 drop table if exists kakarotosfc.roles;
@@ -150,6 +155,38 @@ CREATE TABLE IF NOT EXISTS app_user_role (
   FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
+CREATE TABLE IF NOT EXISTS client (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    client_id VARCHAR(255) NOT NULL,
+    client_secret VARCHAR(255) NOT NULL,
+    require_proof_key BOOLEAN NOT NULL,
+    UNIQUE(client_id),
+    UNIQUE(client_secret)
+);
+
+CREATE TABLE IF NOT EXISTS client_authentication_methods (
+    client_id INT,
+    authentication_methods VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_authorization_grant_types (
+    client_id INT,
+    authorization_grant_types VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_redirect_uris (
+    client_id INT,
+    redirect_uris VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_scopes (
+    client_id INT,
+    scopes VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
 /*insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
 insert into kakarotosfc.roles values (2,"ROLE_USER");
 */

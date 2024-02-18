@@ -107,7 +107,6 @@ public class AuthorizationSecurityConfig {
     public ClientSettings clientSettings(){
         return ClientSettings.builder().requireProofKey(true).build();
     }
-
 */
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer(){

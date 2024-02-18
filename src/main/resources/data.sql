@@ -9,15 +9,15 @@ drop table if exists kakarotosfc.units_per_size;
 drop table if exists kakarotosfc.product_image;
 drop table if exists kakarotosfc.product;
 drop table if exists kakarotosfc.collection;
-DROP TABLE IF EXISTS kakarotosfc.client_authentication_methods;
-DROP TABLE IF EXISTS kakarotosfc.client_authorization_grant_types;
-DROP TABLE IF EXISTS kakarotosfc.client_redirect_uris;
-DROP TABLE IF EXISTS kakarotosfc.client_scopes;
-DROP TABLE IF EXISTS kakarotosfc.client;
-/*drop table if exists kakarotosfc.app_user_role;
+drop table if exists kakarotosfc.client_authentication_methods;
+drop table if exists kakarotosfc.client_authorization_grant_types;
+drop table if exists kakarotosfc.client_redirect_uris;
+drop table if exists kakarotosfc.client_scopes;
+drop table if exists kakarotosfc.client;
+drop table if exists kakarotosfc.app_user_role;
 drop table if exists kakarotosfc.app_user;
 drop table if exists kakarotosfc.roles;
-*/
+
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -166,13 +166,13 @@ CREATE TABLE IF NOT EXISTS client (
 
 CREATE TABLE IF NOT EXISTS client_authentication_methods (
     client_id INT,
-    authentication_methods VARCHAR(255),
+    authentication_methods VARBINARY(255),
     FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
 CREATE TABLE IF NOT EXISTS client_authorization_grant_types (
     client_id INT,
-    authorization_grant_types VARCHAR(255),
+    authorization_grant_types VARBINARY(255),
     FOREIGN KEY (client_id) REFERENCES client(id)
 );
 
@@ -187,9 +187,9 @@ CREATE TABLE IF NOT EXISTS client_scopes (
     scopes VARCHAR(255),
     FOREIGN KEY (client_id) REFERENCES client(id)
 );
-/*insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
+
+insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
 insert into kakarotosfc.roles values (2,"ROLE_USER");
-*/
 /*
 insert into kakarotosfc.player values (1, 'Franco Madou', 1, 'Goalkeeper', 'R', 1, 4, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');
 insert into kakarotosfc.player values (2, 'Evanilson Dos Santos', 2, 'Defender', 'R', 2, 3, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');

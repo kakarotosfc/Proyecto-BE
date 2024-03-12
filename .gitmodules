@@ -1,0 +1,3 @@
+[submodule "resource-server"]
+	path = resource-server
+	url = https://github.com/kakarotosfc/resource-server.git

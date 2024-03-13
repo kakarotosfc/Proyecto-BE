@@ -9,6 +9,15 @@ drop table if exists kakarotosfc.units_per_size;
 drop table if exists kakarotosfc.product_image;
 drop table if exists kakarotosfc.product;
 drop table if exists kakarotosfc.collection;
+drop table if exists kakarotosfc.client_authentication_methods;
+drop table if exists kakarotosfc.client_authorization_grant_types;
+drop table if exists kakarotosfc.client_redirect_uris;
+drop table if exists kakarotosfc.client_scopes;
+drop table if exists kakarotosfc.client;
+drop table if exists kakarotosfc.app_user_role;
+drop table if exists kakarotosfc.app_user;
+drop table if exists kakarotosfc.roles;
+
 
 CREATE TABLE IF NOT EXISTS player (
   id INT NOT NULL AUTO_INCREMENT,
@@ -119,6 +128,68 @@ CREATE TABLE IF NOT EXISTS auth (
   generation_date DATE NULL,
   PRIMARY KEY (client)
 );
+
+CREATE TABLE IF NOT EXISTS roles (
+  id INT NOT NULL,
+  role VARCHAR(255) NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS app_user (
+  id INT AUTO_INCREMENT NOT NULL,
+  credentials_expired BOOLEAN NULL,
+  disabled BOOLEAN NULL,
+  expired BOOLEAN NULL,
+  locked BOOLEAN NULL,
+  password VARCHAR(255) NULL,
+  username VARCHAR(255) NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS app_user_role (
+  id INT AUTO_INCREMENT NOT NULL,
+  app_user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (app_user_id) REFERENCES app_user (id),
+  FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+
+CREATE TABLE IF NOT EXISTS client (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    client_id VARCHAR(255) NOT NULL,
+    client_secret VARCHAR(255) NOT NULL,
+    require_proof_key BOOLEAN NOT NULL,
+    UNIQUE(client_id),
+    UNIQUE(client_secret)
+);
+
+CREATE TABLE IF NOT EXISTS client_authentication_methods (
+    client_id INT,
+    authentication_methods VARBINARY(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_authorization_grant_types (
+    client_id INT,
+    authorization_grant_types VARBINARY(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_redirect_uris (
+    client_id INT,
+    redirect_uris VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+CREATE TABLE IF NOT EXISTS client_scopes (
+    client_id INT,
+    scopes VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+insert into kakarotosfc.roles values (1,"ROLE_ADMIN");
+insert into kakarotosfc.roles values (2,"ROLE_USER");
 /*
 insert into kakarotosfc.player values (1, 'Franco Madou', 1, 'Goalkeeper', 'R', 1, 4, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');
 insert into kakarotosfc.player values (2, 'Evanilson Dos Santos', 2, 'Defender', 'R', 2, 3, '2022-01-01', null, 'https://i.pinimg.com/564x/2b/31/5b/2b315b08283f31a440c6c7124801a374.jpg');
